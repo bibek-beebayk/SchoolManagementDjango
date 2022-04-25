@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <h3>Details for {{ student.name }}</h3>
+    <div>
+        Name:  {{student.name}} <br>
+        Class: {{ student.grade }} <br>
+        Roll No. : {{ student.roll_no }} <br>
+        Address: {{ student_address }} <br>
+        Phone Number: {{ student.phone }} <br>
+        Date of Birth: {{ student.dob }} <br>
+    </div>
+
+</div>
+
+{% endblock content %}

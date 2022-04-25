@@ -37,9 +37,31 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # other
     'django_extensions',
     'debug_toolbar',
-    'main',
+    'rest_framework',
+    'django_filters',
+    'ckeditor',
+    'versatileimagefield',
+
+
+
+    # local
+    # 'main',
+    'teacher',
+    'student',
+    'department',
+    'exam',
+    'fee',
+    'result',
+    'assignment',
+    'subject',
+    'grade',
+    'staff',
+    'api',
+
 
 
 ]
@@ -81,8 +103,12 @@ WSGI_APPLICATION = 'SchoolManagement.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'school_management_db',
+        'USER': 'postgres',
+        'PASSWORD': 'beebayk123',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -130,4 +156,30 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 INTERNAL_IPS = [
     "127.0.0.1",
-]
+] 
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES' : [
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    # 'PAGE_SIZE': 5,
+    'DEFAULT_RENDERER_CLASSES': [
+        # 'rest_framework.renderers.AdminRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework.renderers.JSONRenderer',
+        
+    ], 'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ],
+
+
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '100/day', 
+        'user': '1000/day'
+    }
+}

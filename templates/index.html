@@ -2,62 +2,11 @@
 
 {% block content %}
 <div class="container">
-    <h2>All Students</h2>
-    <p>Total Students: {{ students.count }}</p>
-    <table class="table table-striped">
-        <thead>
-            <th>Id</th>
-            <th>Last Name</th>
-            <th>First Name</th>
-            <th>Class</th>
-            <th>Gender</th>
-            <th>Roll Number</th>
-            <th>Address</th>
-            <th>Phone</th>
-            <th>Guardian</th>
-        </thead>
+    <a href="{% url 'all-students' %}">View All Students</a><br>
+    <a href="#">View Tachers</a> <br>
+    <a href="#">View Classes</a> <br>
+    <a href="#">View Subjects</a> <br>
 
-        {% for student in students %}
-
-        <tr>
-            <td>{{student.id}}</td>
-            <td>{{student.last_name}}</td>
-            <td>{{student.first_name}}</td>
-            <td>{{ student.grade }}</td>
-            <td>{{ student.gender }}</td>
-            <td>{{ student.roll_no }}</td>
-            <td>{{ student.address }}</td>
-            <td>{{ student.phone }}</td>
-            <td>{{ student.guardian }}</td>
-            
-        </tr>
-
-        {% endfor %}
-
-    </table>
-
-    <hr>
-    <div>
-        <h2>All Male Students</h2>
-    <table class="table table-striped">
-        <thead>
-            <th>Id</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Class</th>
-            <th>Gender</th>
-        </thead>
-
-        {% for student in male_students %}
-        <tr>
-            <td>{{ student.id }}</td>
-            <td>{{ student.first_name }}</td>
-            <td>{{ student.last_name }}</td>
-            <td>{{ student.grade }}</td>
-            <td>{{ student.gender }}</td>
-        </tr>
-        {% endfor %}
-    </div>
-    
 </div>
+
 {% endblock content %}
