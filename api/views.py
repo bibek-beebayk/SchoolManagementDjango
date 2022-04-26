@@ -1,5 +1,8 @@
+from cgitb import lookup
+from django.forms import ValidationError
 from django.shortcuts import render
 import django_filters.rest_framework
+from datetime import datetime
 from rest_framework.response import Response
 from rest_framework import status, filters
 from rest_framework.views import APIView
@@ -37,16 +40,30 @@ class SubjectViewSet(viewsets.ModelViewSet):
 
     filter_backends = [filters.OrderingFilter]
     ordering_fields = ['name', 'created_at']
-    ordering = ['name'] # default ordering field
+    ordering = ['-created_at'] # default ordering field
 
     # filter_backends = [IsOwnerFilterBackend]
     authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [RestrictDelete]
 
+    # import ipdb; ipdb.set_trace()
+
 
     def get_queryset(self):
         return Subject.objects.all()
         
+    # def create(self, request, *args, **kwargs):
+    #     serializer = self.get_serializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)        
+    #     self.perform_create(serializer)
+    #     headers = self.get_success_headers(serializer.data)
+    #     return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    # def create(self, request, *args, **kwargs):
+    #     serializer = self.get_serializer(data=request.data)
+    #     current_user = serializer.pop['current_user']
+    #     serializer.created_by = current_user
+    #     serializer.save()
 
     
 
@@ -58,8 +75,7 @@ class StudentViewSet(viewsets.ModelViewSet):
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     filterset_fields = ['grade', 'gender']
     throttling_classes = [AnonRateThrottle, UserRateThrottle]
-
-
+    lookup_field = 'slug'
 
 class GradeViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.GradeSerializer
@@ -74,9 +90,13 @@ class ExamViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ExamSerializer
     queryset = Exam.objects.all()
 
+
 class AssignmentViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.AssignmentSerializer
     queryset = Assignment.objects.all()
+    pagination_class = MyPageNumberPagination
+
+    
 
 class DepartmentViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.DepartmentSerializer

@@ -6,6 +6,7 @@ from datetime import datetime
 @admin.register(models.Student)
 class StudentAdmin(admin.ModelAdmin):
     list_display = ['name', 'grade', 'phone', 'address', 'dob']
+    prepopulated_fields = {'slug': ('name',)}
 
     # def age_in_years(self, student):
     #     return (datetime.date.today()-student.dob).days//365

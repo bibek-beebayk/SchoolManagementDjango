@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from datetime import date
 from django.forms import ValidationError
 from pkg_resources import require
 from rest_framework import serializers
@@ -17,31 +18,86 @@ from teacher.models import Teacher
 
 class SubjectSerializer(serializers.ModelSerializer): 
 
+    # import ipdb; ipdb.set_trace()
+    # current_user = serializers.SerializerMethodField('get_user')
+
+    # def get_user(self, obj):
+    #     request = self.context.get('request', None)
+    #     if request:
+    #         return request.user
+    # user = serializers.StringRelatedField(read_only=True, default=serializers.CurrentUserDefault())
+
+
     class Meta:
         model = Subject
-        fields = '__all__'
-        read_only_fields = ['created_by']    
-
         
+        fields = '__all__'
+        read_only_fields = ['created_by', 'slug']  
 
-    
+        # import ipdb; ipdb.set_trace()  
+
+    # def create(self, validated_data):
+    #     current_user = validated_data.pop['current_user']
+    #     validated_data['created_by'] = current_user
+    #     return validated_data
+# 
+      # import ipdb; ipdb.set_trace()
+
+    def get_slug(self, validated_data):
+        sub_name = validated_data['name']
+        sub_name = sub_name.replace(',', '')
+        slug = sub_name.replace(' ', '-')
+        return slug.lower()
+
+
+    def create(self, validated_data):
+        slug = self.get_slug(validated_data)
+        sub = Subject(name=validated_data['name'], created_by=self.context['request'].user, slug=slug)        
+        sub.save()
+        return sub        
+
 
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
-        fields = '__all__'
+        fields = ['name', 'grade', 'roll_no', 'admission_date', 'phone', 'email', 'dob', 'gender', 'previous_school', 'guardian_name', 'guardian_profession', 'guardian_address', 'guardian_phone', 'is_specially_abled']
+    
 
 
 class AssignmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Assignment
-        fields = '__all__'
+        fields = ['subject', 'grade', 'short_title', 'description', 'submission_date', 'is_active', 'posted_by']
+        read_only_fields = ['posted_by']
+
+     
+
+
+    def create(self, validated_data):
+        assignment = Assignment(
+            short_title = validated_data['short_title'],
+            description = validated_data['description'],
+            submission_date = validated_data['submission_date'],
+            is_active = validated_data['is_active'],
+            subject = validated_data['subject'],
+            grade = validated_data['grade'],
+            posted_by = self.context['request'].user
+        )
+
+        assignment.save()
+        return assignment
+
+    def validate_submission_date(self, value):
+        if value < date.today():
+            raise ValidationError('The submission date must be a date after present date.')
+        return value
+
 
 
 class DepartmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Department
-        fields = '__all__'
+        fields = ['name', 'created_at', 'created_by']
 
 
 class ExamSerializer(serializers.ModelSerializer):
