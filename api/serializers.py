@@ -220,4 +220,20 @@ class MessageSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Message
-        fields = ['id', 'subject', 'body', 'sender', 'receiver', 'is_read']
+        fields = ['id', 'message_subject', 'body',  'sender', 'receiver', 'is_read']
+        
+        extra_kwargs = {
+            'sender': {'read_only': True}
+        }
+
+
+    def create(self, validated_data):
+        validated_data.pop('sender', None)
+        message = Message(            
+            **validated_data,
+            sender =  self.context['request'].user
+        )
+
+        message.save()
+        return message
+

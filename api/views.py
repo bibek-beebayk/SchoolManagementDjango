@@ -1,4 +1,5 @@
 from cgitb import lookup
+from xml.dom import NotFoundErr
 from django.forms import ValidationError
 from django.shortcuts import render
 import django_filters.rest_framework
@@ -170,8 +171,7 @@ class RegisterView(generics.CreateAPIView):
 
 
 class SentMessageView(viewsets.ModelViewSet):
-
-    permission_classes = ['IsAuthenticated']
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = serializers.MessageSerializer
 
     def get_queryset(self):
@@ -180,12 +180,24 @@ class SentMessageView(viewsets.ModelViewSet):
 
 
 class ReceivedMessageView(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = serializers.MessageSerializer
 
-    def get_queryset(self):
+    def get_queryset(self):  
         qs = Message.objects.filter(receiver=self.request.user)
+        print(qs)
         return qs
 
+    
+class SendMessageView(viewsets.GenericViewSet, mixins.CreateModelMixin):
+    model = Message
+    serializer_class = serializers.MessageSerializer
+
+    # def create(self, request, *args, **kwargs):
+    #     serializer = serializers.MessageSerializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #     serializer.save()
+    #     return Response(serializer.data, status=status.HTTP_201_CREATED)
     
 
 
