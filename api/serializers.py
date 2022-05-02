@@ -8,12 +8,23 @@ from subject.models import Subject
 from student.models import Student
 from assignment.models import Assignment
 from department.models import Department
-from exam.models import Exam
+from exam.models import Exam, SingleExam
 from fee.models import Fee
 from grade.models import Grade, GradeSubject
 from result.models import Result
 from staff.models import Staff
 from teacher.models import Teacher
+from attendance.models import Attendance
+from custom_scripts import get_slug
+
+class AttendanceSerializer(serializers.ModelSerializer):
+    def get_student_name(self, request, obj):
+        st_name = obj.student.name
+        return st_name
+
+    class Meta:
+        model = Attendance
+        fields = ['student', 'is_present']
 
 
 class SubjectSerializer(serializers.ModelSerializer): 
@@ -31,7 +42,7 @@ class SubjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subject
         
-        fields = '__all__'
+        fields = ['id', 'name']
         read_only_fields = ['created_by', 'slug']  
 
         # import ipdb; ipdb.set_trace()  
@@ -43,21 +54,17 @@ class SubjectSerializer(serializers.ModelSerializer):
 # 
       # import ipdb; ipdb.set_trace()
 
-    def get_slug(self, validated_data):
-        sub_name = validated_data['name']
-        sub_name = sub_name.replace(',', '')
-        slug = sub_name.replace(' ', '-')
-        return slug.lower()
-
 
     def create(self, validated_data):
-        slug = self.get_slug(validated_data)
+        slug = get_slug(validated_data)
         sub = Subject(name=validated_data['name'], created_by=self.context['request'].user, slug=slug)        
         sub.save()
-        return sub        
-
-
+        return sub      
+        
+          
 class StudentSerializer(serializers.ModelSerializer):
+    
+        
     class Meta:
         model = Student
         fields = ['name', 'grade', 'roll_no', 'admission_date', 'phone', 'email', 'dob', 'gender', 'previous_school', 'guardian_name', 'guardian_profession', 'guardian_address', 'guardian_phone', 'is_specially_abled']
@@ -67,21 +74,15 @@ class StudentSerializer(serializers.ModelSerializer):
 class AssignmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Assignment
-        fields = ['subject', 'grade', 'short_title', 'description', 'submission_date', 'is_active', 'posted_by']
-        read_only_fields = ['posted_by']
-
-     
+        fields = ['id', 'subject', 'grade', 'short_title', 'description', 'submission_date', 'is_active', 'posted_by']
+        read_only_fields = ['posted_by', 'is_active']     
 
 
     def create(self, validated_data):
-        assignment = Assignment(
-            short_title = validated_data['short_title'],
-            description = validated_data['description'],
-            submission_date = validated_data['submission_date'],
-            is_active = validated_data['is_active'],
-            subject = validated_data['subject'],
-            grade = validated_data['grade'],
-            posted_by = self.context['request'].user
+        validated_data.pop('posted_by', None)
+        assignment = Assignment(            
+            **validated_data,
+            posted_by =  self.context['request'].user
         )
 
         assignment.save()
@@ -98,9 +99,24 @@ class DepartmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Department
         fields = ['name', 'created_at', 'created_by']
+        read_only_fields = ['created_at', 'created_by']
+
+    def create(self, validated_data):
+        department = Department(
+            name = validated_data['name'],
+            created_by = self.context['request'].user
+        )
+        department.save()
+        return department
+
+class SingleExamSerializer(serializers.ModelSerializer):
+    class Meta:
+        model: SingleExam
+        fields = ['date', 'subject', 'start_time', 'end_time', 'full_marks', 'pass_marks']
 
 
 class ExamSerializer(serializers.ModelSerializer):
+    # exams = SingleExamSerializer()
     class Meta:
         model = Exam
         fields = '__all__'

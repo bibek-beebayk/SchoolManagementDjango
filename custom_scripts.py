@@ -1,0 +1,5 @@
+def get_slug(self, validated_data):
+        sub_name = validated_data['name']
+        sub_name = sub_name.replace(',', '')
+        slug = sub_name.replace(' ', '-')
+        return slug.lower()

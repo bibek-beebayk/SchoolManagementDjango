@@ -5,12 +5,18 @@ from grade.models import Grade
 # Create your models here.
 
 class Exam(models.Model):
-    subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
     grade = models.ForeignKey(Grade, on_delete=models.PROTECT, null=True, related_name='exam')
-    exam_date = models.DateField()
+    start_date = models.DateField()
+    end_date = models.DateField()
+    
+
+class SingleExam(models.Model):
+    date = models.DateField()
+    subject = models.ForeignKey(Subject, on_delete=models.PROTECT) 
     start_time = models.TimeField()
-    end_time = models.TimeField( null=True)
-    full_marks = models.PositiveSmallIntegerField()
-    pass_marks = models.PositiveSmallIntegerField()
-    room_no = models.CharField(max_length=256)
-    description = models.TextField(null=True, blank=True)
+    end_time = models.TimeField()
+    full_marks = models.PositiveSmallIntegerField(default=100)
+    pass_marks = models.PositiveSmallIntegerField(default=40)
+    # exam_room = models.CharField(max_length=256)
+    exam = models.ForeignKey(Exam, on_delete=models.PROTECT, default=None)
+

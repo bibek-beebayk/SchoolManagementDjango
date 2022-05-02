@@ -1,0 +1,2260 @@
+openapi: 3.0.2
+info:
+  title: ''
+  version: ''
+paths:
+  /api/subjects/:
+    get:
+      operationId: listSubjects
+      description: ''
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Subject'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createSubject
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Subject'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Subject'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Subject'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subject'
+          description: ''
+      tags:
+      - api
+  /api/subjects/{id}/:
+    get:
+      operationId: retrieveSubject
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subject'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateSubject
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Subject'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Subject'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Subject'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subject'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateSubject
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Subject'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Subject'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Subject'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subject'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroySubject
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/students/:
+    get:
+      operationId: listStudents
+      description: ''
+      parameters:
+      - name: grade
+        required: false
+        in: query
+        description: grade
+        schema:
+          type: string
+      - name: gender
+        required: false
+        in: query
+        description: gender
+        schema:
+          type: string
+          enum:
+          - M
+          - F
+          - O
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Student'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createStudent
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Student'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Student'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+          description: ''
+      tags:
+      - api
+  /api/students/{slug}/:
+    get:
+      operationId: retrieveStudent
+      description: ''
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: grade
+        required: false
+        in: query
+        description: grade
+        schema:
+          type: string
+      - name: gender
+        required: false
+        in: query
+        description: gender
+        schema:
+          type: string
+          enum:
+          - M
+          - F
+          - O
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateStudent
+      description: ''
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: grade
+        required: false
+        in: query
+        description: grade
+        schema:
+          type: string
+      - name: gender
+        required: false
+        in: query
+        description: gender
+        schema:
+          type: string
+          enum:
+          - M
+          - F
+          - O
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Student'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Student'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateStudent
+      description: ''
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: grade
+        required: false
+        in: query
+        description: grade
+        schema:
+          type: string
+      - name: gender
+        required: false
+        in: query
+        description: gender
+        schema:
+          type: string
+          enum:
+          - M
+          - F
+          - O
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Student'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Student'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyStudent
+      description: ''
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: grade
+        required: false
+        in: query
+        description: grade
+        schema:
+          type: string
+      - name: gender
+        required: false
+        in: query
+        description: gender
+        schema:
+          type: string
+          enum:
+          - M
+          - F
+          - O
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/assignments/:
+    get:
+      operationId: listAssignments
+      description: ''
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Assignment'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createAssignment
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Assignment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Assignment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Assignment'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Assignment'
+          description: ''
+      tags:
+      - api
+  /api/assignments/{id}/:
+    get:
+      operationId: retrieveAssignment
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Assignment'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateAssignment
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Assignment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Assignment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Assignment'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Assignment'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateAssignment
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Assignment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Assignment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Assignment'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Assignment'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyAssignment
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/departments/:
+    get:
+      operationId: listDepartments
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Department'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createDepartment
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Department'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Department'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Department'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Department'
+          description: ''
+      tags:
+      - api
+  /api/departments/{id}/:
+    get:
+      operationId: retrieveDepartment
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this department.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Department'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateDepartment
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this department.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Department'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Department'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Department'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Department'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateDepartment
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this department.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Department'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Department'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Department'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Department'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyDepartment
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this department.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/exams/:
+    get:
+      operationId: listExams
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Exam'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createExam
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Exam'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Exam'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Exam'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exam'
+          description: ''
+      tags:
+      - api
+  /api/exams/{id}/:
+    get:
+      operationId: retrieveExam
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this exam.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exam'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateExam
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this exam.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Exam'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Exam'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Exam'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exam'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateExam
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this exam.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Exam'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Exam'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Exam'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exam'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyExam
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this exam.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/fees/:
+    get:
+      operationId: listFees
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Fee'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createFee
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Fee'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Fee'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Fee'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Fee'
+          description: ''
+      tags:
+      - api
+  /api/fees/{id}/:
+    get:
+      operationId: retrieveFee
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this fee.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Fee'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateFee
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this fee.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Fee'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Fee'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Fee'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Fee'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateFee
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this fee.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Fee'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Fee'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Fee'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Fee'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyFee
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this fee.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/grades/:
+    get:
+      operationId: listGrades
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Grade'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createGrade
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Grade'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Grade'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Grade'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Grade'
+          description: ''
+      tags:
+      - api
+  /api/grades/{id}/:
+    get:
+      operationId: retrieveGrade
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this grade.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Grade'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateGrade
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this grade.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Grade'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Grade'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Grade'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Grade'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateGrade
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this grade.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Grade'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Grade'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Grade'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Grade'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyGrade
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this grade.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/gradesubjects/:
+    get:
+      operationId: listGradeSubjects
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GradeSubject'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createGradeSubject
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GradeSubject'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GradeSubject'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GradeSubject'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GradeSubject'
+          description: ''
+      tags:
+      - api
+  /api/gradesubjects/{id}/:
+    get:
+      operationId: retrieveGradeSubject
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this grade subject.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GradeSubject'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateGradeSubject
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this grade subject.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GradeSubject'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GradeSubject'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GradeSubject'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GradeSubject'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateGradeSubject
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this grade subject.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GradeSubject'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GradeSubject'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GradeSubject'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GradeSubject'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyGradeSubject
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this grade subject.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/results/:
+    get:
+      operationId: listResults
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Result'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createResult
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Result'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Result'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Result'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+          description: ''
+      tags:
+      - api
+  /api/results/{id}/:
+    get:
+      operationId: retrieveResult
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this result.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateResult
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this result.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Result'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Result'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Result'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateResult
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this result.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Result'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Result'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Result'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyResult
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this result.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/staffs/:
+    get:
+      operationId: listStaffs
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Staff'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createStaff
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Staff'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Staff'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Staff'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Staff'
+          description: ''
+      tags:
+      - api
+  /api/staffs/{id}/:
+    get:
+      operationId: retrieveStaff
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this staff.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Staff'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateStaff
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this staff.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Staff'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Staff'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Staff'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Staff'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateStaff
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this staff.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Staff'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Staff'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Staff'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Staff'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyStaff
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this staff.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/teachers/:
+    get:
+      operationId: listTeachers
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Teacher'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createTeacher
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Teacher'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Teacher'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Teacher'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Teacher'
+          description: ''
+      tags:
+      - api
+  /api/teachers/{id}/:
+    get:
+      operationId: retrieveTeacher
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this teacher.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Teacher'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateTeacher
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this teacher.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Teacher'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Teacher'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Teacher'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Teacher'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateTeacher
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this teacher.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Teacher'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Teacher'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Teacher'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Teacher'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyTeacher
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this teacher.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/attendance/:
+    get:
+      operationId: listAttendances
+      description: ''
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Attendance'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createAttendance
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Attendance'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Attendance'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Attendance'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attendance'
+          description: ''
+      tags:
+      - api
+  /api/attendance/{id}/:
+    get:
+      operationId: retrieveAttendance
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this attendance.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attendance'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateAttendance
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this attendance.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Attendance'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Attendance'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Attendance'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attendance'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateAttendance
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this attendance.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Attendance'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Attendance'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Attendance'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attendance'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyAttendance
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this attendance.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/register/:
+    post:
+      operationId: createUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - api
+components:
+  schemas:
+    Subject:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 256
+      required:
+      - name
+    Student:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 256
+        grade:
+          type: integer
+          nullable: true
+        roll_no:
+          type: integer
+          maximum: 32767
+          minimum: 0
+        admission_date:
+          type: string
+          format: date
+          nullable: true
+        phone:
+          type: string
+          nullable: true
+          maxLength: 10
+        email:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        dob:
+          type: string
+          format: date
+          nullable: true
+        gender:
+          enum:
+          - M
+          - F
+          - O
+          type: string
+        previous_school:
+          type: string
+          nullable: true
+          maxLength: 256
+        guardian_name:
+          type: string
+          nullable: true
+          maxLength: 256
+        guardian_profession:
+          type: string
+          nullable: true
+          maxLength: 256
+        guardian_address:
+          type: string
+          nullable: true
+          maxLength: 256
+        guardian_phone:
+          type: string
+          nullable: true
+          maxLength: 10
+        is_specially_abled:
+          type: boolean
+          nullable: true
+      required:
+      - name
+      - grade
+      - roll_no
+      - gender
+    Assignment:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        subject:
+          type: integer
+        grade:
+          type: integer
+        short_title:
+          type: string
+          nullable: true
+          maxLength: 256
+        description:
+          type: string
+          nullable: true
+        submission_date:
+          type: string
+          format: date
+        is_active:
+          type: boolean
+          readOnly: true
+        posted_by:
+          type: string
+          readOnly: true
+          nullable: true
+      required:
+      - subject
+      - submission_date
+    Department:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 256
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        created_by:
+          type: string
+          readOnly: true
+          nullable: true
+      required:
+      - name
+    Exam:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+        grade:
+          type: integer
+          nullable: true
+      required:
+      - start_date
+      - end_date
+    Fee:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        admission_fee:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        monthly_fee:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        transportation_fee:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        other_fee:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        discount:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        student:
+          type: integer
+          nullable: true
+    Grade:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 256
+        room_no:
+          type: string
+          nullable: true
+          maxLength: 10
+        student_count:
+          type: integer
+          maximum: 32767
+          nullable: true
+          minimum: 0
+        class_teacher:
+          type: integer
+          nullable: true
+      required:
+      - name
+      - class_teacher
+    GradeSubject:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        textbook:
+          type: string
+          nullable: true
+          maxLength: 256
+        subject:
+          type: integer
+        teacher:
+          type: integer
+          nullable: true
+        grade:
+          type: integer
+          nullable: true
+      required:
+      - subject
+      - grade
+    Result:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        full_marks:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        pass_marks:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        obtained_marks:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        result:
+          enum:
+          - P
+          - F
+          type: string
+        student:
+          type: integer
+          nullable: true
+      required:
+      - full_marks
+      - pass_marks
+      - result
+    Staff:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        first_name:
+          type: string
+          maxLength: 256
+        middle_name:
+          type: string
+          nullable: true
+          maxLength: 256
+        last_name:
+          type: string
+          maxLength: 256
+        address:
+          type: string
+          maxLength: 256
+        phone:
+          type: string
+          maxLength: 10
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        job_designation:
+          type: string
+          maxLength: 256
+        salary:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        joining_date:
+          type: string
+          format: date
+        image:
+          type: string
+          format: binary
+        department:
+          type: array
+          items:
+            type: string
+          readOnly: true
+      required:
+      - first_name
+      - last_name
+      - address
+      - phone
+      - email
+      - job_designation
+      - salary
+      - joining_date
+      - image
+    Teacher:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 256
+        mobile_number:
+          type: string
+          maxLength: 10
+        address:
+          type: string
+          maxLength: 256
+        email:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        joined_on:
+          type: string
+          format: date
+          nullable: true
+        salary:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        gender:
+          enum:
+          - M
+          - F
+          - O
+          type: string
+        specialization:
+          type: string
+          maxLength: 256
+        proficient_subjects:
+          type: array
+          items:
+            type: string
+        dob:
+          type: string
+          format: date
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - name
+      - mobile_number
+      - address
+      - salary
+      - gender
+      - specialization
+    Attendance:
+      type: object
+      properties:
+        student:
+          type: integer
+        is_present:
+          type: boolean
+      required:
+      - student
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+\z
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        password:
+          type: string
+          writeOnly: true
+          maxLength: 128
+        confirm_password:
+          type: string
+          writeOnly: true
+      required:
+      - username
+      - password
+      - confirm_password

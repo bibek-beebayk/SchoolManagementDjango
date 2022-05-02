@@ -8,7 +8,7 @@ from rest_framework import status, filters
 from rest_framework.views import APIView
 from rest_framework.exceptions import AuthenticationFailed
 from django.contrib.auth.models import User
-from rest_framework import viewsets, permissions, generics, authentication
+from rest_framework import viewsets, permissions, generics, authentication, mixins
 from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
 from grade.models import Grade, GradeSubject
 from subject.models import Subject
@@ -20,14 +20,21 @@ from fee.models import Fee
 from result.models import Result
 from staff.models import Staff
 from teacher.models import Teacher
+from attendance.models import Attendance
 from . import serializers
 from .custom_paginations import MyPageNumberPagination, MyLimitOffsetPagination, MyCursorPagination
 from .custom_filters import IsOwnerFilterBackend
-from .custom_permission import RestrictDelete
+from .custom_permission import RestrictDelete, RestrictUpdate, ViewAssignmentPermission
 
 
 # Create your views here.
-class SubjectViewSet(viewsets.ModelViewSet):
+class AttendanceViewSet(viewsets.ModelViewSet):
+    queryset = Attendance.objects.all()
+    serializer_class = serializers.AttendanceSerializer
+    filter_backends = [filters.OrderingFilter, filters.SearchFilter]
+
+
+class SubjectViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
     serializer_class = serializers.SubjectSerializer
     # queryset = Subject.objects.all().order_by('-created_at')
 
@@ -44,7 +51,7 @@ class SubjectViewSet(viewsets.ModelViewSet):
 
     # filter_backends = [IsOwnerFilterBackend]
     authentication_classes = [authentication.SessionAuthentication]
-    permission_classes = [RestrictDelete]
+    permission_classes = [RestrictDelete, RestrictUpdate, ViewAssignmentPermission]
 
     # import ipdb; ipdb.set_trace()
 
@@ -93,8 +100,15 @@ class ExamViewSet(viewsets.ModelViewSet):
 
 class AssignmentViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.AssignmentSerializer
-    queryset = Assignment.objects.all()
+    # queryset = Assignment.objects.all()
     pagination_class = MyPageNumberPagination
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            if self.request.user.is_superuser:
+                return Assignment.objects.all()
+            return Assignment.objects.filter(posted_by=self.request.user)
+        return Assignment.objects.filter(id=None)
 
     
 

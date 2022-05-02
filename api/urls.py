@@ -1,4 +1,5 @@
 from rest_framework.routers import DefaultRouter
+from rest_framework.schemas import get_schema_view
 from django.urls import path
 from . import views
 
@@ -14,6 +15,7 @@ router.register('gradesubjects', views.GradeSubjectViewSet, basename='gradesubje
 router.register('results', views.ResultViewSet, basename='results')
 router.register('staffs', views.StaffViewSet, basename='staffs')
 router.register('teachers', views.TeacherViewSet, basename='teachers')
+router.register('attendance', views.AttendanceViewSet, basename='attendance')
 
 
 urlpatterns = router.urls
@@ -21,5 +23,12 @@ urlpatterns = router.urls
 registration_url = path('register/', views.RegisterView.as_view(), name='register')
 # login_url = path('login/', views.LoginView.as_view(), name='login')
 
+schema_url = path('openapi/', get_schema_view(
+        title="SchoolManagement API",
+        description="API for the School Management System",
+        version="1.0.0"
+    ), name='openapi-schema')
+
 urlpatterns.append(registration_url)
 # urlpatterns.append(login_url)
+urlpatterns.append(schema_url)
