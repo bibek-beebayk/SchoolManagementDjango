@@ -15,6 +15,7 @@ from result.models import Result
 from staff.models import Staff
 from teacher.models import Teacher
 from attendance.models import Attendance
+from message.models import Message
 from custom_scripts import get_slug
 
 class AttendanceSerializer(serializers.ModelSerializer):
@@ -213,3 +214,10 @@ class UserSerializer(serializers.ModelSerializer):
 
 #         instance.save()
 #         return instance
+
+
+class MessageSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Message
+        fields = ['id', 'subject', 'body', 'sender', 'receiver', 'is_read']
