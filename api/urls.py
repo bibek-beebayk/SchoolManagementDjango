@@ -1,3 +1,4 @@
+from asyncio import BaseTransport
 from rest_framework.routers import DefaultRouter
 from rest_framework.schemas import get_schema_view
 from django.urls import path
@@ -16,6 +17,8 @@ router.register('results', views.ResultViewSet, basename='results')
 router.register('staffs', views.StaffViewSet, basename='staffs')
 router.register('teachers', views.TeacherViewSet, basename='teachers')
 router.register('attendance', views.AttendanceViewSet, basename='attendance')
+router.register('received-messages', views.ReceivedMessageView, basename='received-messages')
+router.register('sent-messages', views.SentMessageView, basename='sent-messages')
 
 
 urlpatterns = router.urls

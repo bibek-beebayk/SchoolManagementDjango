@@ -62,6 +62,8 @@ INSTALLED_APPS = [
     'staff',
     'api',
     'attendance',
+    'message'
+
 
 
 

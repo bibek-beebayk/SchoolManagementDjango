@@ -21,6 +21,7 @@ from result.models import Result
 from staff.models import Staff
 from teacher.models import Teacher
 from attendance.models import Attendance
+from message.models import Message
 from . import serializers
 from .custom_paginations import MyPageNumberPagination, MyLimitOffsetPagination, MyCursorPagination
 from .custom_filters import IsOwnerFilterBackend
@@ -166,5 +167,26 @@ class RegisterView(generics.CreateAPIView):
 #                 'message': 'Success'
 #             }
 #         )
+
+
+class SentMessageView(viewsets.ModelViewSet):
+
+    permission_classes = ['IsAuthenticated']
+    serializer_class = serializers.MessageSerializer
+
+    def get_queryset(self):
+        qs = Message.objects.filter(sender=self.request.user)
+        return qs
+
+
+class ReceivedMessageView(viewsets.ModelViewSet):
+    serializer_class = serializers.MessageSerializer
+
+    def get_queryset(self):
+        qs = Message.objects.filter(receiver=self.request.user)
+        return qs
+
+    
+
 
     
