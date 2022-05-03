@@ -178,7 +178,7 @@ class UserSerializer(serializers.ModelSerializer):
                 'password': '  Fields do not match.'
             })
 
-        return attrs
+        return attrs    
 
     def create(self, validated_data):
 
@@ -228,12 +228,31 @@ class MessageSerializer(serializers.ModelSerializer):
 
 
     def create(self, validated_data):
+
+        # if validated_data['sender'] == validated_data['receiver']:
+        #     return Response({
+        #         'error': 'Not allowed'
+        #     })
+
         validated_data.pop('sender', None)
+
+        
+
         message = Message(            
             **validated_data,
-            sender =  self.context['request'].user
+            sender =  self.context['request'].user,
+
         )
 
-        message.save()
-        return message
+        print(message.sender)
+        print(message.receiver)
+        print(vars(message._state))
+
+        if message.sender ==  message.receiver:
+            message.message_subject = "Cannot send message."
+            message.body = "Sender and Receiver are the same person"
+            return message
+        else:
+            message.save()
+            return message
 
