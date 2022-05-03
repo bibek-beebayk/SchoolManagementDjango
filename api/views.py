@@ -170,7 +170,7 @@ class RegisterView(generics.CreateAPIView):
 #         )
 
 
-class SentMessageView(viewsets.ModelViewSet):
+class SentMessageView(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModelMixin):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = serializers.MessageSerializer
 
@@ -179,7 +179,7 @@ class SentMessageView(viewsets.ModelViewSet):
         return qs
 
 
-class ReceivedMessageView(viewsets.ModelViewSet):
+class ReceivedMessageView(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModelMixin):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = serializers.MessageSerializer
 

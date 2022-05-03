@@ -1,8 +1,10 @@
+from http.client import HTTPResponse
+from lib2to3.pgen2.parse import ParseError
 from django.contrib.auth.models import User
 from datetime import date
 from django.forms import ValidationError
 from pkg_resources import require
-from rest_framework import serializers
+from rest_framework import serializers, status
 from rest_framework.response import Response
 from subject.models import Subject
 from student.models import Student
@@ -69,6 +71,7 @@ class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = ['name', 'grade', 'roll_no', 'admission_date', 'phone', 'email', 'dob', 'gender', 'previous_school', 'guardian_name', 'guardian_profession', 'guardian_address', 'guardian_phone', 'is_specially_abled']
+
     
 
 
@@ -93,6 +96,9 @@ class AssignmentSerializer(serializers.ModelSerializer):
         if value < date.today():
             raise ValidationError('The submission date must be a date after present date.')
         return value
+
+    # def update(self, instance, validated_data):
+    #     return super().update(instance, validated_data)
 
 
 
@@ -228,25 +234,16 @@ class MessageSerializer(serializers.ModelSerializer):
 
 
     def create(self, validated_data):
-
-        # if validated_data['sender'] == validated_data['receiver']:
-        #     return Response({
-        #         'error': 'Not allowed'
-        #     })
-
         validated_data.pop('sender', None)
-
-        
-
         message = Message(            
             **validated_data,
             sender =  self.context['request'].user,
 
         )
 
-        print(message.sender)
-        print(message.receiver)
-        print(vars(message._state))
+        # print(message.sender)
+        # print(message.receiver)
+        # print(vars(message._state))
 
         if message.sender ==  message.receiver:
             message.message_subject = "Cannot send message."
@@ -255,4 +252,3 @@ class MessageSerializer(serializers.ModelSerializer):
         else:
             message.save()
             return message
-
