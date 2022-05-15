@@ -23,6 +23,7 @@ from staff.models import Staff
 from teacher.models import Teacher
 from attendance.models import Attendance
 from message.models import Message
+from notice.models import Notice
 from . import serializers
 from .custom_paginations import MyPageNumberPagination, MyLimitOffsetPagination, MyCursorPagination
 from .custom_filters import IsOwnerFilterBackend
@@ -37,6 +38,8 @@ class AttendanceViewSet(viewsets.ModelViewSet):
 
 
 class SubjectViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
+
+
     serializer_class = serializers.SubjectSerializer
     # queryset = Subject.objects.all().order_by('-created_at')
 
@@ -59,6 +62,7 @@ class SubjectViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.Retr
 
 
     def get_queryset(self):
+        import ipdb; ipdb.set_trace()
         return Subject.objects.all()
         
     # def create(self, request, *args, **kwargs):
@@ -199,6 +203,12 @@ class SendMessageView(viewsets.GenericViewSet, mixins.CreateModelMixin):
     #     serializer.save()
     #     return Response(serializer.data, status=status.HTTP_201_CREATED)
     
+
+class NoticeViewSet(viewsets.ModelViewSet):
+    # model = Notice
+    serializer_class = serializers.NoticeSerializer
+    queryset = Notice.objects.all()
+
 
 
     

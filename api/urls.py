@@ -20,7 +20,7 @@ router.register('attendance', views.AttendanceViewSet, basename='attendance')
 router.register('received-messages', views.ReceivedMessageView, basename='received-messages')
 router.register('sent-messages', views.SentMessageView, basename='sent-messages')
 router.register('create-message', views.SendMessageView, basename='create-message')
-
+router.register('notices', views.NoticeViewSet, basename='notices')
 
 urlpatterns = router.urls
 

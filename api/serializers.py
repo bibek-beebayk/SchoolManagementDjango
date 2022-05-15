@@ -18,6 +18,7 @@ from staff.models import Staff
 from teacher.models import Teacher
 from attendance.models import Attendance
 from message.models import Message
+from notice.models import Notice
 from custom_scripts import get_slug
 
 class AttendanceSerializer(serializers.ModelSerializer):
@@ -252,3 +253,25 @@ class MessageSerializer(serializers.ModelSerializer):
         else:
             message.save()
             return message
+
+
+class NoticeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notice
+        fields = ['id','title', 'description', 'created_by']
+        
+        extra_kwargs = {
+                    'created_by': {'read_only': True},
+                }
+        
+
+    def create(self, validated_data):
+        validated_data.pop('created_by', None)
+        notice = Notice(
+                **validated_data,
+                created_by = self.context['request'].user,
+                )
+        notice.save()
+        return notice
+
+
