@@ -1,6 +1,4 @@
-#!/bin/sh
-'''exec' "/home/bibek/Documents/Django Projects/SchoolManagement/env/bin/python3" "$0" "$@"
-' '''
+#!/home/awecode-pc1/Documents/django_samples/schoolmgmt/SchoolManagementDjango/env/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

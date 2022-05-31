@@ -12,7 +12,7 @@ from assignment.models import Assignment
 from department.models import Department
 from exam.models import Exam, SingleExam
 from fee.models import Fee
-from grade.models import Grade, GradeSubject
+from grade.models import Grade
 from result.models import Result
 from staff.models import Staff
 from teacher.models import Teacher
@@ -33,30 +33,11 @@ class AttendanceSerializer(serializers.ModelSerializer):
 
 class SubjectSerializer(serializers.ModelSerializer): 
 
-    # import ipdb; ipdb.set_trace()
-    # current_user = serializers.SerializerMethodField('get_user')
-
-    # def get_user(self, obj):
-    #     request = self.context.get('request', None)
-    #     if request:
-    #         return request.user
-    # user = serializers.StringRelatedField(read_only=True, default=serializers.CurrentUserDefault())
-
-
     class Meta:
         model = Subject
         
         fields = ['id', 'name']
         read_only_fields = ['created_by', 'slug']  
-
-        # import ipdb; ipdb.set_trace()  
-
-    # def create(self, validated_data):
-    #     current_user = validated_data.pop['current_user']
-    #     validated_data['created_by'] = current_user
-    #     return validated_data
-# 
-      # import ipdb; ipdb.set_trace()
 
 
     def create(self, validated_data):
@@ -66,17 +47,52 @@ class SubjectSerializer(serializers.ModelSerializer):
         return sub      
         
           
-class StudentSerializer(serializers.ModelSerializer):
-    
+class StudentSerializer(serializers.ModelSerializer):    
         
     class Meta:
         model = Student
-        fields = ['name', 'grade', 'roll_no', 'admission_date', 'phone', 'email', 'dob', 'gender', 'previous_school', 'guardian_name', 'guardian_profession', 'guardian_address', 'guardian_phone', 'is_specially_abled']
+        fields = ['name', 'grade', 'roll_no', 'admission_date', 'phone', 'email', 'dob', 'gender', 'previous_school', 'guardian_name', 'guardian_profession', 'guardian_address', 'guardian_phone', 'is_specially_abled']    
 
-    
+class TeacherSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Teacher
+        fields = ['id', 'name', 'mobile_number', 'address', 'email', 'joined_on', 'salary', 'gender', 'specialization', 'proficient_subjects', 'dob']
 
+        extra_kwargs = {
+            'id' : {
+                'read_only' : False,
+                'required' : False
+            }
+        }
+
+class GradeSerializer(serializers.ModelSerializer):
+    class_teacher = TeacherSerializer()
+    class Meta:
+        model = Grade
+        fields = ['id', 'name', 'class_teacher']
+
+    def create(self, validated_data):
+
+        validated_data.pop('class_teacher')
+
+        grade = Grade.objects.create(**validated_data)
+
+        class_teacher = self.context['request'].data.get('class_teacher')
+
+        import ipdb; ipdb.set_trace()
+        
+        if class_teacher.get('id'):
+            grade.class_teacher = Teacher.objects.get(id=class_teacher.get('id'))
+        else:
+            grade.class_teacher  = Teacher.objects.create(**class_teacher)
+
+
+
+
+        return grade
 
 class AssignmentSerializer(serializers.ModelSerializer):
+    grade = GradeSerializer()
     class Meta:
         model = Assignment
         fields = ['id', 'subject', 'grade', 'short_title', 'description', 'submission_date', 'is_active', 'posted_by']
@@ -136,15 +152,10 @@ class FeeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class GradeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Grade
-        fields = '__all__'
 
 
 class GradeSubjectSerializer(serializers.ModelSerializer):
     class Meta:
-        model = GradeSubject
         fields = '__all__'
 
 
@@ -159,11 +170,6 @@ class StaffSerializer(serializers.ModelSerializer):
         model = Staff
         fields = '__all__'
 
-
-class TeacherSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Teacher
-        fields = '__all__'
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -199,29 +205,6 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
-# class UserSerializer(serializers.Serializer):
-#     username = serializers.CharField(max_length=15, required=True)
-#     email = serializers.EmailField(required=True)
-#     password = serializers.CharField(max_length=32, required=True)
-#     # confirm_password = serializers.CharField(max_length=32, required=True)
-
-#     def create(self, validated_data):
-#         password = validated_data.pop('password', None)
-#         # confirm_password = confirm_password
-#         instance = User(**validated_data)
-
-#         # if password != confirm_password:
-#         #     return Response(
-#         #         {
-#         #             'message':'The passwords do not match.',
-#         #         }
-#         #     )
-#         if password is not None:
-#             instance.set_password(password)
-
-#         instance.save()
-#         return instance
-
 
 class MessageSerializer(serializers.ModelSerializer):
     
@@ -242,9 +225,6 @@ class MessageSerializer(serializers.ModelSerializer):
 
         )
 
-        # print(message.sender)
-        # print(message.receiver)
-        # print(vars(message._state))
 
         if message.sender ==  message.receiver:
             message.message_subject = "Cannot send message."

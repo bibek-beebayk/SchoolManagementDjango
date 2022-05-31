@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django_filters',
     'ckeditor',
     'versatileimagefield',
+    'django_quill',
 
 
 
@@ -107,12 +108,12 @@ WSGI_APPLICATION = 'SchoolManagement.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'school_management_db',
-        'USER': 'postgres',
-        'PASSWORD': 'beebayk123',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'USER': 'smsuser',
+        'PASSWORD': 'smsuser',
+        'HOST': '127.0.0.1',
+        'PORT': '',
     }
 }
 
@@ -163,17 +164,17 @@ INTERNAL_IPS = [
 ] 
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES' : [
-        'rest_framework.authentication.SessionAuthentication',
-    ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-    ],
+    # 'DEFAULT_AUTHENTICATION_CLASSES' : [
+    #     'rest_framework.authentication.SessionAuthentication',
+    # ],
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    # ],
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     # 'PAGE_SIZE': 5,
     'DEFAULT_RENDERER_CLASSES': [
         # 'rest_framework.renderers.AdminRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
+        # 'rest_framework.renderers.BrowsableAPIRenderer',
         'rest_framework.renderers.JSONRenderer',
         
     ], 'DEFAULT_THROTTLE_CLASSES': [

@@ -11,7 +11,7 @@ from rest_framework.exceptions import AuthenticationFailed
 from django.contrib.auth.models import User
 from rest_framework import viewsets, permissions, generics, authentication, mixins
 from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
-from grade.models import Grade, GradeSubject
+from grade.models import Grade
 from subject.models import Subject
 from student.models import Student
 from assignment.models import Assignment
@@ -62,7 +62,7 @@ class SubjectViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.Retr
 
 
     def get_queryset(self):
-        import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
         return Subject.objects.all()
         
     # def create(self, request, *args, **kwargs):
@@ -96,8 +96,6 @@ class GradeViewSet(viewsets.ModelViewSet):
 
 class GradeSubjectViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.GradeSubjectSerializer
-    queryset = GradeSubject.objects.all()
-
 
 class ExamViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ExamSerializer
@@ -144,34 +142,6 @@ class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = serializers.UserSerializer
 
-
-# class LoginView(APIView):
-#     '''Endpoint for User Login'''
-#     def post(self, request):
-#         username = request.data['username']
-#         password = request.data['password']
-#         user = User.objects.filter(username=username).first()
-#         print(user)
-
-#         if user is None:
-#             raise AuthenticationFailed('User Not Found!')
-        
-#         if not user.check_password(password):
-#             raise AuthenticationFailed('Incorrect Password!')
-
-#         # payload = {
-#         #     'id': user.id,
-#         #     'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
-#         #     'iat': datetime.datetime.utcnow()
-#         # }
-
-#         # token = jwt.encode(payload, 'secret', algorithm='HS256').decode('utf-8')
-
-#         return Response(
-#             {
-#                 'message': 'Success'
-#             }
-#         )
 
 
 class SentMessageView(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModelMixin):

@@ -1,6 +1,8 @@
 
+import datetime
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
+from pytz import timezone
 # Create your models here.
 
 class Teacher(models.Model):
@@ -10,7 +12,7 @@ class Teacher(models.Model):
     mobile_number = models.CharField(max_length=10)
     address = models.CharField(max_length=256)
     email = models.EmailField(blank=True, null=True)
-    joined_on = models.DateField(blank=True, null=True)
+    joined_on = models.DateField(blank=True, default=datetime.date.today(), null=True )
     salary = models.PositiveIntegerField()
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     specialization = models.CharField(max_length=256)

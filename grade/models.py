@@ -15,16 +15,7 @@ class Grade(models.Model):
         return self.name
 
     class Meta:
-        unique_together = [['name', 'class_teacher']]
+        unique_together = [['name', 'class_teacher']]   
 
-
-class GradeSubject(models.Model):
-    subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
-    textbook = models.CharField(max_length=256, null=True, blank=True)
-    teacher = models.ForeignKey(Teacher, on_delete=models.PROTECT, null=True)
-    grade = models.ForeignKey(Grade, on_delete=models.PROTECT, null=True)
-
-    class Meta:
-        unique_together = [['subject', 'grade']]
 
 
